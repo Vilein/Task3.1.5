@@ -10,4 +10,5 @@ public interface UserService extends UserDetailsService {
     User update(User user);
     List<User> getAllUsers();
     User getUserById(Long id);
+    public User getCurrentUser();
 }

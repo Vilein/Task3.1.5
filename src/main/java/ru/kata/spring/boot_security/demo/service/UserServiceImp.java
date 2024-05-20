@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.service;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User getUserById(Long id) {
-        return userRepository.getUserById(id);
+        User user = userRepository.getUserById(id);
+        Hibernate.initialize(user.getRoles());
+        return user;
     }
 
     @Override
@@ -60,5 +63,9 @@ public class UserServiceImp implements UserService {
             new UsernameNotFoundException("такого пользователя не существует");
         }
         return user;
+    }
+    @Override
+    public User getCurrentUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
