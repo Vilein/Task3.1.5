@@ -19,11 +19,7 @@ public class AdminRestController {
         this.userService = userService;
     }
 
-//    @GetMapping("/userss")
-//    public ResponseEntity<User> getUserData (Principal principal) {
-//        User user = (User) userService.loadUserByUsername(principal.getName());
-//        return new ResponseEntity<>(user, HttpStatus.OK);
-//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById (@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
